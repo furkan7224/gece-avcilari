@@ -1,0 +1,47 @@
+name: App Store (API)
+on:
+  workflow_dispatch:
+    inputs:
+      islem:
+        description: "setup = mağaza bilgileri ve ekran görüntüleri · status · submit = yapıyı bağla ve incelemeye gönder · ship = yapıyı bekle + submit"
+        required: true
+        default: status
+        type: choice
+        options: [status, setup, submit, ship, withdraw]
+      app_id:
+        description: "App Store Connect uygulama kimliği (sayı, ör. 6831234567)"
+        required: true
+      surum:
+        description: "Sürüm numarası"
+        required: true
+        default: "1.0.0"
+      yayin:
+        description: "Onaydan sonra: MANUAL (elle yayınla) / AFTER_APPROVAL (otomatik)"
+        required: false
+        default: AFTER_APPROVAL
+jobs:
+  asc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 110
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyjwt cryptography requests
+      - name: Anahtar
+        run: |
+          mkdir -p "$RUNNER_TEMP/keys"
+          printf '%s' "${{ secrets.APP_STORE_KEY_P8 }}" > "$RUNNER_TEMP/keys/key.p8"
+      - name: Çalıştır
+        env:
+          APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
+          APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
+          APP_STORE_KEY_PATH: ${{ runner.temp }}/keys/key.p8
+          APP_ID: ${{ inputs.app_id }}
+          VERSION: ${{ inputs.surum }}
+          RELEASE_TYPE: ${{ inputs.yayin }}
+        run: python scripts/asc_gece.py ${{ inputs.islem }}
+      - name: Anahtarı temizle
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/keys"

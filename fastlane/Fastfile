@@ -1,0 +1,100 @@
+default_platform(:ios)
+
+require "openssl"
+require "base64"
+require "tmpdir"
+
+APP_ID = "com.gulergamestudios.geceavcilari"
+PROJECT = "ios/App/App.xcodeproj"
+KEYCHAIN = "fastlane_tmp_keychain"
+# Önceki başarısız denemelerden kalan geçici sertifikalar (varsa iptal edilir)
+ORPHAN_CERTS = []
+
+def revoke_cert(id)
+  Spaceship::ConnectAPI::Certificate.get(certificate_id: id).delete!
+  UI.message("Geçici dağıtım sertifikası iptal edildi: #{id}")
+rescue => e
+  UI.message("Sertifika iptal atlandı (#{id}): #{e.message}")
+end
+
+platform :ios do
+  desc "Dağıtım sertifikası + App Store profili oluştur, derle, TestFlight'a yükle"
+  lane :beta do
+    setup_ci # geçici anahtarlık: fastlane_tmp_keychain (şifresiz)
+    kc_path = File.expand_path("~/Library/Keychains/#{KEYCHAIN}-db")
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_KEY_ID"],
+      issuer_id: ENV["APP_STORE_ISSUER_ID"],
+      key_filepath: ENV["APP_STORE_KEY_PATH"],
+      duration: 1200
+    )
+
+    ORPHAN_CERTS.each { |id| revoke_cert(id) }
+
+    # Paket kimliği Apple'da kayıtlı değilse oluştur
+    unless Spaceship::ConnectAPI::BundleId.find(APP_ID)
+      Spaceship::ConnectAPI::BundleId.create(name: "Gece Avcilari", identifier: APP_ID, platform: "IOS")
+      UI.success("Paket kimliği kaydedildi: #{APP_ID}")
+    end
+
+    # Apple WWDR ara sertifikası (imza zinciri için)
+    tmp = Dir.mktmpdir
+    wwdr = File.join(tmp, "AppleWWDRCAG3.cer")
+    sh("curl -fsSL -o '#{wwdr}' https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer")
+    sh("security import '#{wwdr}' -k '#{kc_path}' -T /usr/bin/codesign || true")
+
+    cert_id = nil
+    begin
+      # 1) Bu Mac'te özel anahtar + CSR üret, Apple'dan "Apple Distribution" sertifikası al
+      key = OpenSSL::PKey::RSA.new(2048)
+      csr = OpenSSL::X509::Request.new
+      csr.version = 0
+      csr.subject = OpenSSL::X509::Name.parse("/CN=Gece Avcilari CI/O=Guler Game Studios/C=TR")
+      csr.public_key = key.public_key
+      csr.sign(key, OpenSSL::Digest::SHA256.new)
+      cert = Spaceship::ConnectAPI::Certificate.create(certificate_type: "DISTRIBUTION", csr_content: csr.to_pem)
+      cert_id = cert.id
+      UI.success("Dağıtım sertifikası oluşturuldu: #{cert_id}")
+
+      # 2) Özel anahtar ve sertifikayı ayrı ayrı geçici anahtarlığa kur
+      x509 = OpenSSL::X509::Certificate.new(Base64.decode64(cert.certificate_content))
+      key_path = File.join(tmp, "dist_key.pem")
+      cer_path = File.join(tmp, "dist.cer")
+      File.write(key_path, key.to_pem)
+      File.binwrite(cer_path, x509.to_der)
+      sh("security import '#{key_path}' -k '#{kc_path}' -t priv -f openssl -T /usr/bin/codesign -T /usr/bin/security")
+      sh("security import '#{cer_path}' -k '#{kc_path}' -t cert -f x509")
+      sh("security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k '' '#{kc_path}' > /dev/null")
+      File.delete(key_path)
+      sh("security find-identity -v -p codesigning '#{kc_path}'")
+
+      # 3) Bu sertifikayı içeren App Store profili
+      get_provisioning_profile(api_key: api_key, app_identifier: APP_ID, force: true,
+                               cert_id: cert_id, skip_certificate_verification: true,
+                               filename: "GeceAvcilari_AppStore.mobileprovision")
+      profile_name = lane_context[SharedValues::SIGH_NAME]
+
+      update_code_signing_settings(
+        path: PROJECT, targets: ["App"], use_automatic_signing: false,
+        team_id: ENV["APPLE_TEAM_ID"], code_sign_identity: "Apple Distribution",
+        profile_name: profile_name, bundle_identifier: APP_ID
+      )
+
+      # 4) Derle + dışa aktar
+      build_app(
+        project: PROJECT, scheme: "App", configuration: "Release",
+        output_directory: "build", output_name: "GeceAvcilari.ipa",
+        export_method: "app-store",
+        export_options: { provisioningProfiles: { APP_ID => profile_name } },
+        xcargs: "CURRENT_PROJECT_VERSION=#{ENV['BUILD_NUMBER']} DEVELOPMENT_TEAM=#{ENV['APPLE_TEAM_ID']}"
+      )
+
+      # 5) TestFlight
+      upload_to_testflight(api_key: api_key, skip_waiting_for_build_processing: true)
+    ensure
+      # Geçici sertifikayı iptal et (TestFlight / App Store yapıları etkilenmez)
+      revoke_cert(cert_id) if cert_id
+    end
+  end
+end

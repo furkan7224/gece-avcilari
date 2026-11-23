@@ -1,0 +1,28 @@
+{
+  "appId": "com.gulergamestudios.geceavcilari",
+  "appName": "Gece Avcıları",
+  "webDir": "www",
+  "backgroundColor": "#05080c",
+  "ios": {
+    "contentInset": "always",
+    "backgroundColor": "#05080c",
+    "limitsNavigationsToAppBoundDomains": false
+  },
+  "android": {
+    "backgroundColor": "#05080c"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "launchAutoHide": true,
+      "backgroundColor": "#05080c",
+      "showSpinner": false,
+      "androidScaleType": "CENTER_CROP"
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#05080c",
+      "overlaysWebView": false
+    }
+  }
+}

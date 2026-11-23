@@ -1,0 +1,75 @@
+name: iOS → TestFlight
+
+# Actions sekmesinden "Run workflow" ile elle başlatılır.
+on:
+  workflow_dispatch:
+    inputs:
+      reklam_modu:
+        description: "Reklam modu (test = Google test reklamları, gercek = canlı reklamlar)"
+        required: true
+        default: "gercek"
+        type: choice
+        options: [gercek, test]
+      mac:
+        description: "Mac türü (GitHub yoğunsa macos-15 dene)"
+        required: false
+        default: "macos-26"
+        type: choice
+        options: [macos-26, macos-15]
+
+jobs:
+  ios:
+    runs-on: ${{ inputs.mac || 'macos-26' }}
+    timeout-minutes: 60
+    env:
+      APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
+      APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Gizli anahtarları kontrol et
+        run: |
+          for v in APP_STORE_KEY_ID APP_STORE_ISSUER_ID APPLE_TEAM_ID; do
+            if [ -z "${!v}" ]; then echo "::error::$v gizli değişkeni eksik (Settings → Secrets and variables → Actions)"; exit 1; fi
+          done
+          if [ -z "${{ secrets.APP_STORE_KEY_P8 }}" ]; then echo "::error::APP_STORE_KEY_P8 gizli değişkeni eksik"; exit 1; fi
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Paketleri kur
+        run: npm ci
+
+      - name: Reklam modunu ayarla
+        run: |
+          if [ "${{ inputs.reklam_modu }}" = "gercek" ]; then
+            sed -i '' 's/testing: true,/testing: false,/' www/ad-config.js
+          fi
+          grep -n "testing:" www/ad-config.js
+
+      - name: Capacitor iOS senkronizasyonu
+        run: npx cap sync ios
+
+      - name: App Store Connect API anahtarını yaz
+        run: |
+          mkdir -p "$RUNNER_TEMP/keys"
+          printf '%s' "${{ secrets.APP_STORE_KEY_P8 }}" > "$RUNNER_TEMP/keys/AuthKey_${APP_STORE_KEY_ID}.p8"
+
+      - name: Derle, imzala ve TestFlight'a yükle (fastlane)
+        env:
+          APP_STORE_KEY_PATH: ${{ runner.temp }}/keys/AuthKey_${{ secrets.APP_STORE_KEY_ID }}.p8
+          BUILD_NUMBER: ${{ github.run_number }}
+          FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "180"
+          FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "6"
+        run: bash scripts/ios-release.sh
+
+      - name: Anahtarı temizle
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/keys"
