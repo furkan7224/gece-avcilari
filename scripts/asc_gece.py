@@ -17,7 +17,7 @@ SITE = 'https://furkan7224.github.io/gece-avcilari/'
 PRIVACY = SITE + 'gizlilik.html'
 
 INFO = {  # appInfoLocalizations
-    'tr': {'name': 'Gece Avcıları: Doğaüstü Av', 'subtitle': 'Doğaüstü avcılık ve gizem', 'privacyPolicyUrl': PRIVACY},
+    'tr': {'name': 'Gece Avcıları: Doğaüstü Av', 'subtitle': 'Vakaları çöz, yaratıkları avla', 'privacyPolicyUrl': PRIVACY},
     'en-US': {'name': 'Night Hunters: Gece Avcıları', 'subtitle': 'Supernatural mystery hunts', 'privacyPolicyUrl': PRIVACY + '#en'},
 }
 
@@ -174,9 +174,27 @@ def setup_app_info():
     ar = call('GET', f'/v1/appInfos/{iid}/ageRatingDeclaration', soft=True)
     if ar and ar.get('data'):
         cur = ar['data']['attributes']
-        attrs = {k: v for k, v in AGE.items() if k in cur and (isinstance(cur[k], bool) == isinstance(v, bool) or cur[k] is None)}
-        r = call('PATCH', f"/v1/ageRatingDeclarations/{ar['data']['id']}", {'data': {'type': 'ageRatingDeclarations', 'id': ar['data']['id'], 'attributes': attrs}}, soft=True)
-        log('Yaş derecelendirmesi', 'kaydedildi' if r else 'KAYDEDİLEMEDİ (App Store Connect’ten elle doldur)', '| alanlar:', sorted(cur.keys()))
+        attrs = {k: v for k, v in AGE.items() if k in cur}
+        r = None
+        for _ in range(12):
+            r = call('PATCH', f"/v1/ageRatingDeclarations/{ar['data']['id']}", {'data': {'type': 'ageRatingDeclarations', 'id': ar['data']['id'], 'attributes': attrs}}, ok=(200, 409), soft=True)
+            errs = (r or {}).get('errors') or []
+            if not errs:
+                break
+            miss = [e.get('source', {}).get('pointer', '').split('/')[-1] for e in errs]
+            changed = False
+            for m in miss:
+                if not m:
+                    continue
+                if m not in attrs:
+                    attrs[m] = False; changed = True
+                elif attrs[m] is False:
+                    attrs[m] = 'NONE'; changed = True
+            print('  yaş alanı eklendi:', miss, [e.get('detail') for e in errs][:2])
+            if not changed:
+                break
+            r = None
+        log('Yaş derecelendirmesi', 'kaydedildi' if r and not r.get('errors') else 'KAYDEDİLEMEDİ')
     # içerik hakları
     call('PATCH', f'/v1/apps/{APP_ID}', {'data': {'type': 'apps', 'id': APP_ID, 'attributes': {'contentRightsDeclaration': 'DOES_NOT_USE_THIRD_PARTY_CONTENT'}}}, soft=True)
     log('İçerik hakları: üçüncü taraf içerik yok')
@@ -185,7 +203,8 @@ def setup_app_info():
 def setup_price():
     have = call('GET', f'/v1/apps/{APP_ID}/appPriceSchedule', ok=(200, 404), soft=True)
     if have and have.get('data'):
-        log('Fiyat planı zaten var')
+        mp = call('GET', f"/v1/appPriceSchedules/{have['data']['id']}/manualPrices?include=appPricePoint", soft=True)
+        log('Fiyat planı zaten var:', [(p.get('attributes') or {}).get('customerPrice') for p in (mp or {}).get('included', [])])
         return
     pts = call('GET', f'/v1/apps/{APP_ID}/appPricePoints?filter[territory]=USA&limit=200', soft=True)
     free = [p for p in (pts or {}).get('data', []) if float(p['attributes'].get('customerPrice') or 0) == 0]
