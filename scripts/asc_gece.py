@@ -201,11 +201,6 @@ def setup_app_info():
 
 
 def setup_price():
-    have = call('GET', f'/v1/apps/{APP_ID}/appPriceSchedule', ok=(200, 404), soft=True)
-    if have and have.get('data'):
-        mp = call('GET', f"/v1/appPriceSchedules/{have['data']['id']}/manualPrices?include=appPricePoint", soft=True)
-        log('Fiyat planı zaten var:', [(p.get('attributes') or {}).get('customerPrice') for p in (mp or {}).get('included', [])])
-        return
     pts = call('GET', f'/v1/apps/{APP_ID}/appPricePoints?filter[territory]=USA&limit=200', soft=True)
     free = [p for p in (pts or {}).get('data', []) if float(p['attributes'].get('customerPrice') or 0) == 0]
     if not free:
@@ -217,8 +212,8 @@ def setup_price():
         'manualPrices': {'data': [{'type': 'appPrices', 'id': '${price1}'}]}}},
         'included': [{'type': 'appPrices', 'id': '${price1}', 'attributes': {'startDate': None},
                       'relationships': {'appPricePoint': {'data': {'type': 'appPricePoints', 'id': free[0]['id']}}}}]}
-    r = call('POST', '/v1/appPriceSchedules', body, soft=True)
-    log('Fiyat: Ücretsiz', 'ayarlandı' if r else 'AYARLANAMADI (elle ayarla)')
+    r = call('POST', '/v1/appPriceSchedules', body, ok=(200, 201, 409), soft=True)
+    log('Fiyat: Ücretsiz', 'ayarlandı' if r and not r.get('errors') else ('zaten ayarlı / ' + str((r or {}).get('errors', [{}])[0].get('detail'))))
 
 
 def setup_version(v):
