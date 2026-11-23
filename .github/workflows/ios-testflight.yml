@@ -22,6 +22,10 @@ on:
 permissions:
   contents: write
 
+defaults:
+  run:
+    shell: bash scripts/run.sh {0}
+
 jobs:
   ios:
     runs-on: ${{ inputs.mac || 'macos-26' }}
@@ -35,9 +39,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Gizli anahtarları kontrol et
-        id: anahtar
+
         run: |
-          exec > >(tee -a "$RUNNER_TEMP/log.txt") 2>&1
           for v in APP_STORE_KEY_ID APP_STORE_ISSUER_ID APPLE_TEAM_ID; do
             if [ -z "${!v}" ]; then echo "::error::$v gizli değişkeni eksik (Settings → Secrets and variables → Actions)"; exit 1; fi
           done
@@ -53,9 +56,11 @@ jobs:
           cache: npm
 
       - name: Paketleri kur
+        id: s02
         run: npm ci
 
       - name: Reklam modunu ayarla
+        id: s03
         run: |
           MOD="${{ inputs.reklam_modu }}"; [ -z "$MOD" ] && [ -f ci/ios.env ] && . ci/ios.env && MOD="$REKLAM"
           if [ "$MOD" = "gercek" ]; then
@@ -64,14 +69,17 @@ jobs:
           grep -n "testing:" www/ad-config.js
 
       - name: Capacitor iOS senkronizasyonu
+        id: s04
         run: npx cap sync ios
 
       - name: App Store Connect API anahtarını yaz
+        id: s05
         run: |
           mkdir -p "$RUNNER_TEMP/keys"
           printf '%s' "${{ secrets.APP_STORE_KEY_P8 }}" > "$RUNNER_TEMP/keys/AuthKey_${APP_STORE_KEY_ID}.p8"
 
       - name: Derle, imzala ve TestFlight'a yükle (fastlane)
+        id: s06
         env:
           APP_STORE_KEY_PATH: ${{ runner.temp }}/keys/AuthKey_${{ secrets.APP_STORE_KEY_ID }}.p8
           BUILD_NUMBER: ${{ github.run_number }}
@@ -79,28 +87,25 @@ jobs:
           FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "6"
         run: |
           set -o pipefail
-          bash scripts/ios-release.sh 2>&1 | tee -a "$RUNNER_TEMP/log.txt"
+          bash scripts/ios-release.sh
 
       - name: Günlüğü depoya kaydet
+        id: s07
         if: always()
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           STEPS: ${{ toJSON(steps) }}
+          JOB_STATUS: ${{ job.status }}
+          SLUG: ios
           KID: ${{ secrets.APP_STORE_KEY_ID }}
           ISS: ${{ secrets.APP_STORE_ISSUER_ID }}
           TID: ${{ secrets.APPLE_TEAM_ID }}
-        run: |
-          L="$RUNNER_TEMP/log.txt"; [ -f "$L" ] || echo "(günlük yok)" > "$L"
-          for v in "$KID" "$ISS" "$TID"; do [ -n "$v" ] && sed -i.bak "s|$v|***|g" "$L"; done
-          D="$RUNNER_TEMP/logs"; mkdir -p "$D"; cd "$D"; git init -q
-          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}"
-          if git fetch -q --depth 1 origin ci-logs; then git checkout -q -b ci-logs FETCH_HEAD; else git checkout -q --orphan ci-logs; fi
-          F="${GITHUB_WORKFLOW_SLUG}-${GITHUB_RUN_NUMBER}.txt"
-          { echo "durum: ${{ job.status }}"; echo "adımlar: $STEPS"; echo "-----"; tail -c 300000 "$L"; } > "$F"
-          cp "$F" "son-${GITHUB_WORKFLOW_SLUG}.txt"
-          git add -A; git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "günlük $F"
-          for i in 1 2 3; do git push -q origin ci-logs && break; sleep 3; git fetch -q --depth 1 origin ci-logs && git rebase -q FETCH_HEAD; done
+        shell: bash
+        run: python3 scripts/ci_log.py
 
       - name: Anahtarı temizle
+        shell: bash
+        id: s08
         if: always()
         run: rm -rf "$RUNNER_TEMP/keys"

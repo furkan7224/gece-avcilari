@@ -24,6 +24,10 @@ on:
 permissions:
   contents: write
 
+defaults:
+  run:
+    shell: bash scripts/run.sh {0}
+
 jobs:
   asc:
     runs-on: ubuntu-latest
@@ -37,10 +41,12 @@ jobs:
           python-version: "3.12"
       - run: pip install pyjwt cryptography requests
       - name: Anahtar
+        id: s01
         run: |
           mkdir -p "$RUNNER_TEMP/keys"
           printf '%s' "${{ secrets.APP_STORE_KEY_P8 }}" > "$RUNNER_TEMP/keys/key.p8"
       - name: Çalıştır
+        id: s02
         env:
           APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
           APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
@@ -52,27 +58,24 @@ jobs:
           set -o pipefail
           ISLEM="${{ inputs.islem }}"
           if [ -z "$ISLEM" ] && [ -f ci/asc.env ]; then set -a; . ci/asc.env; set +a; fi
-          python -u scripts/asc_gece.py "$ISLEM" 2>&1 | tee -a "$RUNNER_TEMP/log.txt"
+          python -u scripts/asc_gece.py "$ISLEM"
       - name: Günlüğü depoya kaydet
+        id: s03
         if: always()
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           STEPS: ${{ toJSON(steps) }}
+          JOB_STATUS: ${{ job.status }}
+          SLUG: asc
           KID: ${{ secrets.APP_STORE_KEY_ID }}
           ISS: ${{ secrets.APP_STORE_ISSUER_ID }}
           TID: ${{ secrets.APPLE_TEAM_ID }}
-        run: |
-          L="$RUNNER_TEMP/log.txt"; [ -f "$L" ] || echo "(günlük yok)" > "$L"
-          for v in "$KID" "$ISS" "$TID"; do [ -n "$v" ] && sed -i.bak "s|$v|***|g" "$L"; done
-          D="$RUNNER_TEMP/logs"; mkdir -p "$D"; cd "$D"; git init -q
-          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}"
-          if git fetch -q --depth 1 origin ci-logs; then git checkout -q -b ci-logs FETCH_HEAD; else git checkout -q --orphan ci-logs; fi
-          F="${GITHUB_WORKFLOW_SLUG}-${GITHUB_RUN_NUMBER}.txt"
-          { echo "durum: ${{ job.status }}"; echo "adımlar: $STEPS"; echo "-----"; tail -c 300000 "$L"; } > "$F"
-          cp "$F" "son-${GITHUB_WORKFLOW_SLUG}.txt"
-          git add -A; git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "günlük $F"
-          for i in 1 2 3; do git push -q origin ci-logs && break; sleep 3; git fetch -q --depth 1 origin ci-logs && git rebase -q FETCH_HEAD; done
+        shell: bash
+        run: python3 scripts/ci_log.py
 
       - name: Anahtarı temizle
+        shell: bash
+        id: s04
         if: always()
         run: rm -rf "$RUNNER_TEMP/keys"
