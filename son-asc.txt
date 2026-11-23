@@ -21,7 +21,7 @@ Collecting pycparser (from cffi>=2.0.0->cryptography)
   Downloading pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)
 Downloading pyjwt-2.15.1-py3-none-any.whl (33 kB)
 Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl (4.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 98.1 MB/s  0:00:00
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 329.1 MB/s  0:00:00
 Downloading requests-2.34.2-py3-none-any.whl (73 kB)
 Downloading charset_normalizer-3.5.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (257 kB)
 Downloading idna-3.20-py3-none-any.whl (69 kB)
@@ -36,19 +36,9 @@ Successfully installed certifi-2026.11.20 cffi-2.1.1 charset_normalizer-3.5.3 cr
 • Kategori: Oyunlar › Rol Yapma, Macera
 • Uygulama bilgisi: tr Gece Avcıları: Doğaüstü Av
 • Uygulama bilgisi: en-US Night Hunters: Gece Avcıları
-  yaş alanı eklendi: ['socialMedia'] ["You must provide a value for the attribute 'socialMedia' with this request"]
 • Yaş derecelendirmesi kaydedildi
 • İçerik hakları: üçüncü taraf içerik yok
-HATA GET /v1/appPriceSchedules/6838212073/manualPrices?include=appPricePoint 404 {
-  "errors" : [ {
-    "id" : "c1b89f10-38ed-4525-8bea-bb3ced4ea243",
-    "status" : "404",
-    "code" : "NOT_FOUND",
-    "title" : "The specified resource does not exist",
-    "detail" : "There is no resource of type 'null' with id '6838212073'"
-  } ]
-}
-• Fiyat planı zaten var: []
+• Fiyat: Ücretsiz ayarlandı
 • Mağaza metni: tr
 • Ekran görüntüleri zaten yüklü: tr
 • Mağaza metni: en-US
