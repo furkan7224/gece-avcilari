@@ -5,8 +5,8 @@ repo, tok = os.environ['GITHUB_REPOSITORY'], os.environ['GH_TOKEN']
 slug, run, status = os.environ.get('SLUG', 'job'), os.environ.get('GITHUB_RUN_NUMBER', '0'), os.environ.get('JOB_STATUS', '?')
 p = os.path.join(os.environ.get('RUNNER_TEMP', '/tmp'), 'log.txt')
 txt = open(p, errors='replace').read()[-300000:] if os.path.exists(p) else '(günlük yok)'
-for k in ('KID', 'ISS', 'TID'):
-    v = os.environ.get(k)
+for k in ("KID", "ISS", "TID"):
+    v = (os.environ.get(k) or "").strip()
     if v: txt = txt.replace(v, '***')
 steps = os.environ.get('STEPS', '{}')
 try: steps = json.dumps({k: v.get('outcome') for k, v in json.loads(steps).items()}, ensure_ascii=False)

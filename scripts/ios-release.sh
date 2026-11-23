@@ -3,6 +3,9 @@
 # Gerekli ortam değişkenleri: APP_STORE_KEY_ID, APP_STORE_ISSUER_ID, APPLE_TEAM_ID, APP_STORE_KEY_PATH, BUILD_NUMBER
 set -euo pipefail
 cd "$(dirname "$0")/.."
+# Gizli değerlerdeki boşluk/satır sonlarını temizle
+for v in APP_STORE_KEY_ID APP_STORE_ISSUER_ID APPLE_TEAM_ID; do export "$v=$(printf '%s' "${!v}" | tr -d '[:space:]')"; done
+echo "Takım kimliği uzunluğu: ${#APPLE_TEAM_ID} (10 olmalı) · Anahtar kimliği uzunluğu: ${#APP_STORE_KEY_ID}"
 echo "Yapı numarası: ${BUILD_NUMBER}"
 if ! command -v fastlane >/dev/null 2>&1; then
   echo "fastlane kuruluyor…"

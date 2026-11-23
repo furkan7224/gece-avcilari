@@ -109,8 +109,8 @@ AGE = {  # yalnızca API'nin döndürdüğü alanlar gönderilir
 def token():
     key = open(os.environ['APP_STORE_KEY_PATH']).read()
     now = int(time.time())
-    return jwt.encode({'iss': os.environ['APP_STORE_ISSUER_ID'], 'iat': now, 'exp': now + 1100, 'aud': 'appstoreconnect-v1'},
-                      key, algorithm='ES256', headers={'kid': os.environ['APP_STORE_KEY_ID'], 'typ': 'JWT'})
+    return jwt.encode({'iss': os.environ['APP_STORE_ISSUER_ID'].strip(), 'iat': now, 'exp': now + 1100, 'aud': 'appstoreconnect-v1'},
+                      key, algorithm='ES256', headers={'kid': os.environ['APP_STORE_KEY_ID'].strip(), 'typ': 'JWT'})
 
 
 S = requests.Session()
