@@ -28,7 +28,7 @@ defaults:
 
 jobs:
   ios:
-    runs-on: ${{ inputs.mac || 'macos-26' }}
+    runs-on: ${{ inputs.mac || 'macos-15' }}
     timeout-minutes: 60
     env:
       GITHUB_WORKFLOW_SLUG: ios
@@ -49,6 +49,11 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
+
+      - name: Xcode 26 kontrolü
+        run: |
+          xcodebuild -version
+          xcodebuild -version | head -1 | grep -Eq "Xcode (2[6-9]|[3-9][0-9])" || { echo "::error::Xcode 26 veya üstü gerekli"; exit 1; }
 
       - uses: actions/setup-node@v4
         with:
