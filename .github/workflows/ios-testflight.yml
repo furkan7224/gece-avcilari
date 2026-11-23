@@ -2,6 +2,8 @@ name: iOS → TestFlight
 
 # Actions sekmesinden "Run workflow" ile elle başlatılır.
 on:
+  push:
+    branches: [ci-ios]
   workflow_dispatch:
     inputs:
       reklam_modu:
@@ -17,11 +19,15 @@ on:
         type: choice
         options: [macos-26, macos-15]
 
+permissions:
+  contents: write
+
 jobs:
   ios:
     runs-on: ${{ inputs.mac || 'macos-26' }}
     timeout-minutes: 60
     env:
+      GITHUB_WORKFLOW_SLUG: ios
       APP_STORE_KEY_ID: ${{ secrets.APP_STORE_KEY_ID }}
       APP_STORE_ISSUER_ID: ${{ secrets.APP_STORE_ISSUER_ID }}
       APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
@@ -29,7 +35,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Gizli anahtarları kontrol et
+        id: anahtar
         run: |
+          exec > >(tee -a "$RUNNER_TEMP/log.txt") 2>&1
           for v in APP_STORE_KEY_ID APP_STORE_ISSUER_ID APPLE_TEAM_ID; do
             if [ -z "${!v}" ]; then echo "::error::$v gizli değişkeni eksik (Settings → Secrets and variables → Actions)"; exit 1; fi
           done
@@ -49,7 +57,8 @@ jobs:
 
       - name: Reklam modunu ayarla
         run: |
-          if [ "${{ inputs.reklam_modu }}" = "gercek" ]; then
+          MOD="${{ inputs.reklam_modu }}"; [ -z "$MOD" ] && [ -f ci/ios.env ] && . ci/ios.env && MOD="$REKLAM"
+          if [ "$MOD" = "gercek" ]; then
             sed -i '' 's/testing: true,/testing: false,/' www/ad-config.js
           fi
           grep -n "testing:" www/ad-config.js
@@ -68,7 +77,29 @@ jobs:
           BUILD_NUMBER: ${{ github.run_number }}
           FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "180"
           FASTLANE_XCODEBUILD_SETTINGS_RETRIES: "6"
-        run: bash scripts/ios-release.sh
+        run: |
+          set -o pipefail
+          bash scripts/ios-release.sh 2>&1 | tee -a "$RUNNER_TEMP/log.txt"
+
+      - name: Günlüğü depoya kaydet
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STEPS: ${{ toJSON(steps) }}
+          KID: ${{ secrets.APP_STORE_KEY_ID }}
+          ISS: ${{ secrets.APP_STORE_ISSUER_ID }}
+          TID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          L="$RUNNER_TEMP/log.txt"; [ -f "$L" ] || echo "(günlük yok)" > "$L"
+          for v in "$KID" "$ISS" "$TID"; do [ -n "$v" ] && sed -i.bak "s|$v|***|g" "$L"; done
+          D="$RUNNER_TEMP/logs"; mkdir -p "$D"; cd "$D"; git init -q
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}"
+          if git fetch -q --depth 1 origin ci-logs; then git checkout -q -b ci-logs FETCH_HEAD; else git checkout -q --orphan ci-logs; fi
+          F="${GITHUB_WORKFLOW_SLUG}-${GITHUB_RUN_NUMBER}.txt"
+          { echo "durum: ${{ job.status }}"; echo "adımlar: $STEPS"; echo "-----"; tail -c 300000 "$L"; } > "$F"
+          cp "$F" "son-${GITHUB_WORKFLOW_SLUG}.txt"
+          git add -A; git -c user.name=ci -c user.email=ci@users.noreply.github.com commit -qm "günlük $F"
+          for i in 1 2 3; do git push -q origin ci-logs && break; sleep 3; git fetch -q --depth 1 origin ci-logs && git rebase -q FETCH_HEAD; done
 
       - name: Anahtarı temizle
         if: always()

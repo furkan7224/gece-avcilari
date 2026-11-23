@@ -6,12 +6,13 @@ Ortam: APP_STORE_KEY_ID, APP_STORE_ISSUER_ID, APP_STORE_KEY_PATH, APP_ID, VERSIO
 import os, sys, time, hashlib, glob
 import jwt, requests
 
-APP_ID = os.environ['APP_ID'].strip()
+APP_ID = os.environ.get('APP_ID', '').strip()
+BUNDLE = 'com.gulergamestudios.geceavcilari'
 VERSION = os.environ.get('VERSION', '1.0.0').strip()
 RELEASE_TYPE = os.environ.get('RELEASE_TYPE', 'AFTER_APPROVAL').strip() or 'AFTER_APPROVAL'
 PREV_APP_ID = os.environ.get('PREV_APP_ID', '6830630846')  # Büyük Yemin: inceleme iletişim bilgisi buradan kopyalanır
 BASE = 'https://api.appstoreconnect.apple.com'
-MODE = sys.argv[1] if len(sys.argv) > 1 else 'status'
+MODE = (sys.argv[1] if len(sys.argv) > 1 else '') or 'status'
 SITE = 'https://furkan7224.github.io/gece-avcilari/'
 PRIVACY = SITE + 'gizlilik.html'
 
@@ -330,5 +331,12 @@ def withdraw():
             log('İnceleme geri çekildi', x['id'])
     status()
 
+
+if not APP_ID:
+    r = call('GET', f'/v1/apps?filter[bundleId]={BUNDLE}')['data']
+    if not r:
+        print('UYGULAMA KAYDI YOK: App Store Connect’te', BUNDLE, 'için uygulama oluşturulmamış'); raise SystemExit(2)
+    APP_ID = r[0]['id']
+    log('Uygulama kimliği:', APP_ID)
 
 {'setup': setup, 'status': status, 'submit': submit, 'ship': lambda: submit(True), 'withdraw': withdraw}[MODE]()
