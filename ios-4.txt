@@ -1,0 +1,512 @@
+durum: success
+adımlar: {"s02": "success", "s03": "success", "s04": "success", "s05": "success", "s06": "success"}
+-----
+
+added 111 packages, and audited 112 packages in 4s
+
+14 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+5:   testing: false yap. Test kimlikleriyle mağazaya GÖNDERME.
+8:  testing: true,
+✔ Copying web assets from www to ios/App/App/public in 8.75ms
+✔ Creating capacitor.config.json in ios/App/App in 524.54μs
+✔ copy ios in 20.94ms
+✔ Updating iOS plugins in 684.88μs
+[info] All Capacitor plugins have a Package.swift file and will be included in Package.swift
+[info] Writing Package.swift
+[info] Found 3 Capacitor plugins for ios:
+       @capacitor-community/admob@8.4.2
+       @capacitor/splash-screen@8.0.2
+       @capacitor/status-bar@8.0.4
+✔ update ios in 14.37ms
+[info] Sync finished in 0.053s
+Takım kimliği uzunluğu: 10 (10 olmalı) · Anahtar kimliği uzunluğu: 10
+Yapı numarası: 4
+fastlane 2.242.0
+[07:38:50]: [33mGet started using a Gemfile for fastlane https://docs.fastlane.tools/getting-started/ios/setup/#use-a-gemfile[0m
+[07:38:50]: fastlane 2.242.0 (Ruby 3.4.12, gem)
+[07:38:51]: Sending anonymous analytics information
+[07:38:51]: Learn more at https://docs.fastlane.tools/#metrics
+[07:38:51]: No personal or sensitive data is sent.
+[07:38:51]: You can disable this by adding `opt_out_usage` at the top of your Fastfile
+[07:38:51]: ------------------------------
+[07:38:51]: --- Step: default_platform ---
+[07:38:51]: ------------------------------
+[07:38:51]: Driving the lane 'ios beta' 🚀
+[07:38:51]: ----------------------
+[07:38:51]: --- Step: setup_ci ---
+[07:38:51]: ----------------------
+[07:38:51]: Creating temporary keychain: "fastlane_tmp_keychain".
+[07:38:51]: Found keychain '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db' in list-keychains, adding to search list skipped
+[07:38:51]: Enabling match readonly mode.
+[07:38:51]: ---------------------------------------
+[07:38:51]: --- Step: app_store_connect_api_key ---
+[07:38:51]: ---------------------------------------
+[07:38:51]: --------------------------------------------------------------------
+[07:38:51]: Step: curl -fsSL -o '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/d20261123-2039-rhs3pk/AppleWWDRCAG3.cer' https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer
+[07:38:51]: --------------------------------------------------------------------
+[07:38:51]: $ curl -fsSL -o '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/d20261123-2039-rhs3pk/AppleWWDRCAG3.cer' https://www.apple.com/certificateauthority/AppleWWDRCAG3.cer
+[07:38:52]: --------------------------------------------------------------------
+[07:38:52]: Step: security import '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/d20261123-2039-rhs3pk/AppleWWDRCAG3.cer' -k '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db' -T /usr/bin/codesign || true
+[07:38:52]: --------------------------------------------------------------------
+[07:38:52]: $ security import '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/d20261123-2039-rhs3pk/AppleWWDRCAG3.cer' -k '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db' -T /usr/bin/codesign || true
+[07:38:52]: ▸ 1 certificate imported.
+[07:38:52]: Dağıtım sertifikası oluşturuldu: 7P73AHVX89
+[07:38:52]: --------------------------------------------------------------------
+[07:38:52]: Step: security import '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/d20261123-2039-rhs3pk/dist_key.pem' -k '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db' -t priv -f openssl -T /usr/bin/codesign -T /usr/bin/security
+[07:38:52]: --------------------------------------------------------------------
+[07:38:52]: $ security import '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/d20261123-2039-rhs3pk/dist_key.pem' -k '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db' -t priv -f openssl -T /usr/bin/codesign -T /usr/bin/security
+[07:38:52]: ▸ 1 key imported.
+[07:38:52]: --------------------------------------------------------------------
+[07:38:52]: Step: security import '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/d20261123-2039-rhs3pk/dist.cer' -k '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db' -t cert -f x509
+[07:38:52]: --------------------------------------------------------------------
+[07:38:52]: $ security import '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/d20261123-2039-rhs3pk/dist.cer' -k '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db' -t cert -f x509
+[07:38:52]: ▸ 1 certificate imported.
+[07:38:52]: --------------------------------------------------------------------
+[07:38:52]: Step: security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k '' '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db' > /dev/null
+[07:38:52]: --------------------------------------------------------------------
+[07:38:52]: $ security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k '' '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db' > /dev/null
+[07:38:52]: --------------------------------------------------------------------
+[07:38:52]: Step: security find-identity -v -p codesigning '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db'
+[07:38:52]: --------------------------------------------------------------------
+[07:38:52]: $ security find-identity -v -p codesigning '/Users/runner/Library/Keychains/fastlane_tmp_keychain-db'
+[07:38:52]: ▸ 1) 2B03A2A50C5FB49C201105CD6EFDF54298C5CEE3 "Apple Distribution: FURKAN GULER (***)"
+[07:38:52]: ▸ 1 valid identities found
+[07:38:52]: --------------------------------------
+[07:38:52]: --- Step: get_provisioning_profile ---
+[07:38:52]: --------------------------------------
+
++-----------------------------------------------------------------------------+
+|                          Summary for sigh 2.242.0                           |
++-------------------------------------+---------------------------------------+
+| api_key                             | API_KEY_REDACTED                      |
+| app_identifier                      | com.gulergamestudios.geceavcilari     |
+| force                               | true                                  |
+| cert_id                             | 7P73AHVX89                            |
+| skip_certificate_verification       | true                                  |
+| filename                            | GeceAvcilari_AppStore.mobileprovision |
+| adhoc                               | false                                 |
+| developer_id                        | false                                 |
+| development                         | false                                 |
+| skip_install                        | false                                 |
+| include_mac_in_profiles             | false                                 |
+| offline_profile                     | false                                 |
+| ignore_profiles_with_different_name | false                                 |
+| skip_fetch_profiles                 | false                                 |
+| include_all_certificates            | false                                 |
+| platform                            | ios                                   |
+| readonly                            | false                                 |
+| fail_on_name_taken                  | false                                 |
++-------------------------------------+---------------------------------------+
+
+[07:38:52]: Creating authorization token for App Store Connect API
+[07:38:52]: Fetching profiles...
+[07:38:53]: Provisioning Profile cert_id : '26DWDV3SPH' does not match given cert_id : '7P73AHVX89', skipping this one...
+[07:38:53]: Provisioning Profile cert_id : 'FTM45U4235' does not match given cert_id : '7P73AHVX89', skipping this one...
+[07:38:53]: Provisioning Profile cert_id : '49N8HL3XQY' does not match given cert_id : '7P73AHVX89', skipping this one...
+[07:38:53]: No existing profiles found, that match the certificates you have installed locally! Creating a new provisioning profile for you
+[07:38:54]: The name 'com.gulergamestudios.geceavcilari AppStore' is already taken, using another one.
+[07:38:54]: Creating new provisioning profile for 'com.gulergamestudios.geceavcilari' with name 'com.gulergamestudios.geceavcilari AppStore 1795419534' for 'ios' platform
+[07:38:55]: Downloading provisioning profile...
+[07:38:55]: Successfully downloaded provisioning profile...
+[07:38:55]: Installing provisioning profile...
+/Users/runner/work/gece-avcilari/gece-avcilari/GeceAvcilari_AppStore.mobileprovision
+[07:38:55]: Setting Provisioning Profile type to 'app-store'
+[07:38:55]: ------------------------------------------
+[07:38:55]: --- Step: update_code_signing_settings ---
+[07:38:55]: ------------------------------------------
+
++-------------------------------------------------------------------------------+
+|                       Summary for code signing settings                       |
++-----------------------+-------------------------------------------------------+
+| path                  | ios/App/App.xcodeproj                                 |
+| targets               | ["App"]                                               |
+| use_automatic_signing | false                                                 |
+| team_id               | ***                                            |
+| code_sign_identity    | Apple Distribution                                    |
+| profile_name          | com.gulergamestudios.geceavcilari AppStore 1795419534 |
+| bundle_identifier     | com.gulergamestudios.geceavcilari                     |
++-----------------------+-------------------------------------------------------+
+
+[07:38:55]: Updating the Automatic Codesigning flag to disabled for the given project '/Users/runner/work/gece-avcilari/gece-avcilari/ios/App/App.xcodeproj/project.pbxproj'
+[07:38:55]: Set Team id to: *** for target: App for build configuration: Debug
+[07:38:55]: Set Code Sign identity to: Apple Distribution for target: App for build configuration: Debug
+[07:38:55]: Set Provisioning Profile name to: com.gulergamestudios.geceavcilari AppStore 1795419534 for target: App for build configuration: Debug
+[07:38:55]: Set Bundle identifier to: com.gulergamestudios.geceavcilari for target: App for build configuration: Debug
+[07:38:55]: Set Team id to: *** for target: App for build configuration: Release
+[07:38:55]: Set Code Sign identity to: Apple Distribution for target: App for build configuration: Release
+[07:38:55]: Set Provisioning Profile name to: com.gulergamestudios.geceavcilari AppStore 1795419534 for target: App for build configuration: Release
+[07:38:55]: Set Bundle identifier to: com.gulergamestudios.geceavcilari for target: App for build configuration: Release
+[07:38:55]: Successfully updated project settings to use Code Sign Style = 'Manual'
+[07:38:55]: Modified Targets:
+[07:38:55]: 	 * App
+[07:38:55]: Modified Build Configurations:
+[07:38:55]: 	 * Debug
+[07:38:55]: 	 * Release
+[07:38:55]: -----------------------
+[07:38:55]: --- Step: build_app ---
+[07:38:55]: -----------------------
+[07:38:55]: Resolving Swift Package Manager dependencies...
+[07:38:55]: $ xcodebuild -resolvePackageDependencies -scheme App -project ios/App/App.xcodeproj -configuration Release
+[07:38:57]: ▸ Command line invocation:
+[07:38:57]: ▸     /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild -resolvePackageDependencies -scheme App -project ios/App/App.xcodeproj -configuration Release
+[07:39:01]: ▸ Resolve Package Graph
+[07:39:10]: ▸ Fetching from https://github.com/ionic-team/capacitor-swift-pm.git
+[07:39:11]: ▸ Fetching from https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git
+[07:39:11]: ▸ Fetching from https://github.com/googleads/swift-package-manager-google-mobile-ads.git
+[07:39:12]: ▸ Fetching from https://github.com/webview-native-ui/engine.git
+[07:39:14]: ▸ Creating working copy of package ‘swift-package-manager-google-user-messaging-platform’
+[07:39:14]: ▸ Checking out 3.1.0 of package ‘swift-package-manager-google-user-messaging-platform’
+[07:39:14]: ▸ Creating working copy of package ‘swift-package-manager-google-mobile-ads’
+[07:39:14]: ▸ Checking out 13.11.0 of package ‘swift-package-manager-google-mobile-ads’
+[07:39:14]: ▸ Creating working copy of package ‘capacitor-swift-pm’
+[07:39:14]: ▸ Checking out 8.6.2 of package ‘capacitor-swift-pm’
+[07:39:14]: ▸ Creating working copy of package ‘engine’
+[07:39:14]: ▸ Checking out 1.0.11 of package ‘engine’
+[07:39:19]: ▸ Resolved source packages:
+[07:39:19]: ▸   CapacitorSplashScreen: /Users/runner/work/gece-avcilari/gece-avcilari/node_modules/@capacitor/splash-screen @ local
+[07:39:19]: ▸   CapacitorStatusBar: /Users/runner/work/gece-avcilari/gece-avcilari/node_modules/@capacitor/status-bar @ local
+[07:39:19]: ▸   CapApp-SPM: /Users/runner/work/gece-avcilari/gece-avcilari/ios/App/CapApp-SPM @ local
+[07:39:19]: ▸   WebViewNativeUIEngine: https://github.com/webview-native-ui/engine.git @ 1.0.11
+[07:39:19]: ▸   CapacitorCommunityAdmob: /Users/runner/work/gece-avcilari/gece-avcilari/node_modules/@capacitor-community/admob @ local
+[07:39:19]: ▸   GoogleUserMessagingPlatform: https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git @ 3.1.0
+[07:39:19]: ▸   GoogleMobileAds: https://github.com/googleads/swift-package-manager-google-mobile-ads.git @ 13.11.0
+[07:39:19]: ▸   capacitor-swift-pm: https://github.com/ionic-team/capacitor-swift-pm.git @ 8.6.2
+[07:39:19]: ▸ 2026-11-23 07:39:19.501 xcodebuild[2110:10346] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+[07:39:19]: ▸ resolved source packages: CapacitorSplashScreen, CapacitorStatusBar, CapApp-SPM, WebViewNativeUIEngine, CapacitorCommunityAdmob, GoogleUserMessagingPlatform, GoogleMobileAds, capacitor-swift-pm
+[07:39:19]: $ xcodebuild -showBuildSettings -scheme App -project ios/App/App.xcodeproj -configuration Release 2>&1
+[07:39:25]: Detected provisioning profile mapping: {"com.gulergamestudios.geceavcilari": "com.gulergamestudios.geceavcilari AppStore 1795419534"}
+
++-----------------------------------------------------------------------------------------------------------------------------------+
+|                                                      Summary for gym 2.242.0                                                      |
++-----------------------------------------------------------------------+-----------------------------------------------------------+
+| project                                                               | ios/App/App.xcodeproj                                     |
+| scheme                                                                | App                                                       |
+| configuration                                                         | Release                                                   |
+| output_directory                                                      | build                                                     |
+| output_name                                                           | GeceAvcilari                                              |
+| export_method                                                         | app-store                                                 |
+| export_options.provisioningProfiles.com.gulergamestudios.geceavcilari | com.gulergamestudios.geceavcilari AppStore 1795419534     |
+| xcargs                                                                | CURRENT_PROJECT_VERSION=4 DEVELOPMENT_TEAM=***     |
+| clean                                                                 | false                                                     |
+| silent                                                                | false                                                     |
+| skip_package_ipa                                                      | false                                                     |
+| skip_package_pkg                                                      | false                                                     |
+| build_path                                                            | /Users/runner/Library/Developer/Xcode/Archives/2026-11-23 |
+| result_bundle                                                         | false                                                     |
+| buildlog_path                                                         | ~/Library/Logs/gym                                        |
+| destination                                                           | generic/platform=iOS                                      |
+| xcodebuild_formatter                                                  | xcbeautify                                                |
+| build_timing_summary                                                  | false                                                     |
+| skip_profile_detection                                                | false                                                     |
+| xcodebuild_command                                                    | xcodebuild                                                |
+| skip_package_dependencies_resolution                                  | false                                                     |
+| disallow_xcodebuild_settings_lookup                                   | false                                                     |
+| disable_package_automatic_updates                                     | false                                                     |
+| skip_package_repository_fetches                                       | false                                                     |
+| use_system_scm                                                        | false                                                     |
+| generate_appstore_info                                                | false                                                     |
+| xcode_path                                                            | /Applications/Xcode_26.6.app                              |
++-----------------------------------------------------------------------+-----------------------------------------------------------+
+
+[07:39:25]: $ set -o pipefail && xcodebuild -scheme App -project ios/App/App.xcodeproj -configuration Release -destination generic/platform\=iOS -archivePath /Users/runner/Library/Developer/Xcode/Archives/2026-11-23/GeceAvcilari\ 2026-11-23\ 07.39.25.xcarchive CURRENT_PROJECT_VERSION=4 DEVELOPMENT_TEAM=*** archive | tee /Users/runner/Library/Logs/gym/App-App.log | xcbeautify --disable-colored-output
+[07:39:25]: ▸ ----- xcbeautify -----
+[07:39:25]: ▸ Version: 3.2.1
+[07:39:25]: ▸ ----------------------
+[07:39:26]: ▸ Resolving Package Graph
+[07:39:26]: ▸ Resolved source packages
+[07:39:26]: ▸ WebViewNativeUIEngine - https://github.com/webview-native-ui/engine.git @ 1.0.11
+[07:39:26]: ▸ GoogleMobileAds - https://github.com/googleads/swift-package-manager-google-mobile-ads.git @ 13.11.0
+[07:39:26]: ▸ capacitor-swift-pm - https://github.com/ionic-team/capacitor-swift-pm.git @ 8.6.2
+[07:39:26]: ▸ GoogleUserMessagingPlatform - https://github.com/googleads/swift-package-manager-google-user-messaging-platform.git @ 3.1.0
+[07:39:26]: ▸ 2026-11-23 07:39:26.491 xcodebuild[3061:13747] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+[07:39:27]: ▸ note: Building targets in dependency order
+[07:39:27]: ▸ note: Target dependency graph (20 targets)
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Write Auxiliary File empty-WebViewNativeUIEngine_WebViewNativeUIEngine.plist
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Write Auxiliary File WebViewNativeUIEngine_WebViewNativeUIEngine.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Write Auxiliary File WebViewNativeUIEngine_WebViewNativeUIEngine.DependencyMetadataFileList
+[07:39:34]: ▸ [NativeUIGlassCapture] Write Auxiliary File af3fcb34312c57c0f52879cdce924b91-common-args.resp
+[07:39:34]: ▸ [NativeUIGlassCapture] Write Auxiliary File NativeUIGlassCapture.LinkFileList
+[07:39:34]: ▸ [NativeUIGlassCapture] Write Auxiliary File NativeUIGlassCapture.modulemap
+[07:39:34]: ▸ [NativeUIGlassCapture] Write Auxiliary File NativeUIGlassCapture.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [NativeUIGlassCapture] Write Auxiliary File NativeUIGlassCapture.DependencyMetadataFileList
+[07:39:34]: ▸ [NativeUIGlassCapture] Copy NativeUIGlassCapture.modulemap -> NativeUIGlassCapture.modulemap
+[07:39:34]: ▸ [CapacitorCommunityAdmob_AdMobPlugin] Write Auxiliary File empty-CapacitorCommunityAdmob_AdMobPlugin.plist
+[07:39:34]: ▸ [CapacitorCommunityAdmob_AdMobPlugin] Write Auxiliary File CapacitorCommunityAdmob_AdMobPlugin.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [CapacitorCommunityAdmob_AdMobPlugin] Write Auxiliary File CapacitorCommunityAdmob_AdMobPlugin.DependencyMetadataFileList
+[07:39:34]: ▸ [WebViewNativeUIEngine] Write Auxiliary File WebViewNativeUIEngine.modulemap
+[07:39:34]: ▸ [WebViewNativeUIEngine] Write Auxiliary File WebViewNativeUIEngine.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [WebViewNativeUIEngine] Write Auxiliary File WebViewNativeUIEngine.DependencyMetadataFileList
+[07:39:34]: ▸ [WebViewNativeUIEngine] Write Auxiliary File WebViewNativeUIEngine_const_extract_protocols.json
+[07:39:34]: ▸ [WebViewNativeUIEngine] Write Auxiliary File WebViewNativeUIEngine.SwiftFileList
+[07:39:34]: ▸ [WebViewNativeUIEngine] Write Auxiliary File WebViewNativeUIEngine.SwiftConstValuesFileList
+[07:39:34]: ▸ [WebViewNativeUIEngine] Write Auxiliary File WebViewNativeUIEngine.LinkFileList
+[07:39:34]: ▸ [WebViewNativeUIEngine] Write Auxiliary File WebViewNativeUIEngine-OutputFileMap.json
+[07:39:34]: ▸ [WebViewNativeUIEngine] Write Auxiliary File resource_bundle_accessor.swift
+[07:39:34]: ▸ [WebViewNativeUIEngine] Copy WebViewNativeUIEngine.modulemap -> WebViewNativeUIEngine.modulemap
+[07:39:34]: ▸ [UserMessagingPlatformTarget] Write Auxiliary File UserMessagingPlatformTarget.modulemap
+[07:39:34]: ▸ [UserMessagingPlatformTarget] Write Auxiliary File UserMessagingPlatformTarget.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [UserMessagingPlatformTarget] Write Auxiliary File UserMessagingPlatformTarget.DependencyMetadataFileList
+[07:39:34]: ▸ [UserMessagingPlatformTarget] Write Auxiliary File e6072d4f65d7061329687fe24e3d63a7-common-args.resp
+[07:39:34]: ▸ [UserMessagingPlatformTarget] Write Auxiliary File UserMessagingPlatformTarget.LinkFileList
+[07:39:34]: ▸ [UserMessagingPlatformTarget] Copy UserMessagingPlatformTarget.modulemap -> UserMessagingPlatformTarget.modulemap
+[07:39:34]: ▸ [GoogleMobileAdsTarget] Write Auxiliary File GoogleMobileAdsTarget_const_extract_protocols.json
+[07:39:34]: ▸ [GoogleMobileAdsTarget] Write Auxiliary File GoogleMobileAdsTarget.SwiftFileList
+[07:39:34]: ▸ [GoogleMobileAdsTarget] Write Auxiliary File GoogleMobileAdsTarget.SwiftConstValuesFileList
+[07:39:34]: ▸ [GoogleMobileAdsTarget] Write Auxiliary File GoogleMobileAdsTarget.LinkFileList
+[07:39:34]: ▸ [GoogleMobileAdsTarget] Write Auxiliary File GoogleMobileAdsTarget-OutputFileMap.json
+[07:39:34]: ▸ [GoogleMobileAdsTarget] Write Auxiliary File GoogleMobileAdsTarget.modulemap
+[07:39:34]: ▸ [GoogleMobileAdsTarget] Write Auxiliary File GoogleMobileAdsTarget.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [GoogleMobileAdsTarget] Write Auxiliary File GoogleMobileAdsTarget.DependencyMetadataFileList
+[07:39:34]: ▸ [GoogleMobileAdsTarget] Copy GoogleMobileAdsTarget.modulemap -> GoogleMobileAdsTarget.modulemap
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Processing empty-WebViewNativeUIEngine_WebViewNativeUIEngine.plist
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying zlib-rs-0.6.8-LICENSE
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying simd-adler32-0.3.10-LICENSE.md
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying png-0.17.16-LICENSE-MIT
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying png-0.17.16-LICENSE-APACHE
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying native-ui-engine.js
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying miniz_oxide-0.9.1-LICENSE-ZLIB.md
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying miniz_oxide-0.9.1-LICENSE-MIT.md
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying miniz_oxide-0.9.1-LICENSE-APACHE.md
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying miniz_oxide-0.9.1-LICENSE
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying miniz_oxide-0.8.9-LICENSE-ZLIB.md
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying miniz_oxide-0.8.9-LICENSE-MIT.md
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying miniz_oxide-0.8.9-LICENSE-APACHE.md
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying miniz_oxide-0.8.9-LICENSE
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying flate2-1.1.11-LICENSE-MIT
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying flate2-1.1.11-LICENSE-APACHE
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying fdeflate-0.3.7-LICENSE-MIT
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying fdeflate-0.3.7-LICENSE-APACHE
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying dependencies.json
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying crc32fast-1.5.4-LICENSE-MIT
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying crc32fast-1.5.4-LICENSE-APACHE
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying cfg-if-1.0.5-LICENSE-MIT
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying cfg-if-1.0.5-LICENSE-APACHE
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying bitflags-1.3.2-LICENSE-MIT
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying bitflags-1.3.2-LICENSE-APACHE
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying adler2-2.0.1-LICENSE-MIT
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying adler2-2.0.1-LICENSE-APACHE
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying adler2-2.0.1-LICENSE-0BSD
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying Rust-standard-library.html
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying Rust-Unicode-3.0.txt
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying Rust-MIT.txt
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying Rust-LLVM-exception.txt
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Copying Rust-Apache-2.0.txt
+[07:39:34]: ▸ [StatusBarPlugin] Write Auxiliary File StatusBarPlugin.modulemap
+[07:39:34]: ▸ [StatusBarPlugin] Write Auxiliary File StatusBarPlugin.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [StatusBarPlugin] Write Auxiliary File StatusBarPlugin.DependencyMetadataFileList
+[07:39:34]: ▸ [StatusBarPlugin] Write Auxiliary File StatusBarPlugin_const_extract_protocols.json
+[07:39:34]: ▸ [StatusBarPlugin] Write Auxiliary File StatusBarPlugin.SwiftFileList
+[07:39:34]: ▸ [StatusBarPlugin] Write Auxiliary File StatusBarPlugin.SwiftConstValuesFileList
+[07:39:34]: ▸ [StatusBarPlugin] Write Auxiliary File StatusBarPlugin.LinkFileList
+[07:39:34]: ▸ [StatusBarPlugin] Write Auxiliary File StatusBarPlugin-OutputFileMap.json
+[07:39:34]: ▸ [StatusBarPlugin] Copy StatusBarPlugin.modulemap -> StatusBarPlugin.modulemap
+[07:39:34]: ▸ [SplashScreenPlugin] Write Auxiliary File SplashScreenPlugin.modulemap
+[07:39:34]: ▸ [SplashScreenPlugin] Write Auxiliary File SplashScreenPlugin.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [SplashScreenPlugin] Write Auxiliary File SplashScreenPlugin.DependencyMetadataFileList
+[07:39:34]: ▸ [SplashScreenPlugin] Write Auxiliary File SplashScreenPlugin_const_extract_protocols.json
+[07:39:34]: ▸ [SplashScreenPlugin] Write Auxiliary File SplashScreenPlugin.SwiftFileList
+[07:39:34]: ▸ [SplashScreenPlugin] Write Auxiliary File SplashScreenPlugin.SwiftConstValuesFileList
+[07:39:34]: ▸ [SplashScreenPlugin] Write Auxiliary File SplashScreenPlugin.LinkFileList
+[07:39:34]: ▸ [SplashScreenPlugin] Write Auxiliary File SplashScreenPlugin-OutputFileMap.json
+[07:39:34]: ▸ [SplashScreenPlugin] Copy SplashScreenPlugin.modulemap -> SplashScreenPlugin.modulemap
+[07:39:34]: ▸ [CapApp-SPM] Write Auxiliary File CapApp-SPM.SwiftFileList
+[07:39:34]: ▸ [CapApp-SPM] Write Auxiliary File CapApp-SPM_const_extract_protocols.json
+[07:39:34]: ▸ [CapApp-SPM] Write Auxiliary File CapApp-SPM.SwiftConstValuesFileList
+[07:39:34]: ▸ [CapApp-SPM] Write Auxiliary File CapApp-SPM.LinkFileList
+[07:39:34]: ▸ [CapApp-SPM] Write Auxiliary File CapApp-SPM-OutputFileMap.json
+[07:39:34]: ▸ [CapApp-SPM] Write Auxiliary File CapApp-SPM.modulemap
+[07:39:34]: ▸ [CapApp-SPM] Write Auxiliary File CapApp-SPM.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [CapApp-SPM] Write Auxiliary File CapApp-SPM.DependencyMetadataFileList
+[07:39:34]: ▸ [CapApp-SPM] Copy CapApp-SPM.modulemap -> CapApp-SPM.modulemap
+[07:39:34]: ▸ [App] Write Auxiliary File App_const_extract_protocols.json
+[07:39:34]: ▸ [App] Write Auxiliary File App.SwiftFileList
+[07:39:34]: ▸ [App] Write Auxiliary File App.SwiftConstValuesFileList
+[07:39:34]: ▸ [App] Write Auxiliary File App.LinkFileList
+[07:39:34]: ▸ [App] Write Auxiliary File App-OutputFileMap.json
+[07:39:34]: ▸ [App] Write Auxiliary File Entitlements.plist
+[07:39:34]: ▸ [App] Write Auxiliary File App.hmap
+[07:39:34]: ▸ [App] Write Auxiliary File App.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [App] Write Auxiliary File App.DependencyMetadataFileList
+[07:39:34]: ▸ [App] Write Auxiliary File App-project-headers.hmap
+[07:39:34]: ▸ [App] Write Auxiliary File App-own-target-headers.hmap
+[07:39:34]: ▸ [App] Write Auxiliary File App-generated-files.hmap
+[07:39:34]: ▸ [App] Write Auxiliary File App-all-target-headers.hmap
+[07:39:34]: ▸ [App] Write Auxiliary File App-all-non-framework-target-headers.hmap
+[07:39:34]: ▸ [AdMobPlugin] Write Auxiliary File AdMobPlugin.SwiftFileList
+[07:39:34]: ▸ [AdMobPlugin] Write Auxiliary File AdMobPlugin_const_extract_protocols.json
+[07:39:34]: ▸ [AdMobPlugin] Write Auxiliary File AdMobPlugin.SwiftConstValuesFileList
+[07:39:34]: ▸ [AdMobPlugin] Write Auxiliary File AdMobPlugin.LinkFileList
+[07:39:34]: ▸ [AdMobPlugin] Write Auxiliary File AdMobPlugin-OutputFileMap.json
+[07:39:34]: ▸ [AdMobPlugin] Write Auxiliary File resource_bundle_accessor.swift
+[07:39:34]: ▸ [AdMobPlugin] Write Auxiliary File AdMobPlugin.modulemap
+[07:39:34]: ▸ [AdMobPlugin] Write Auxiliary File AdMobPlugin.DependencyStaticMetadataFileList
+[07:39:34]: ▸ [AdMobPlugin] Write Auxiliary File AdMobPlugin.DependencyMetadataFileList
+[07:39:34]: ▸ [AdMobPlugin] Copy AdMobPlugin.modulemap -> AdMobPlugin.modulemap
+[07:39:34]: ▸ [CapacitorCommunityAdmob_AdMobPlugin] Processing empty-CapacitorCommunityAdmob_AdMobPlugin.plist
+[07:39:34]: ▸ [CapacitorCommunityAdmob_AdMobPlugin] Copying PrivacyInfo.xcprivacy
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] RegisterExecutionPolicyException WebViewNativeUIEngine_WebViewNativeUIEngine.bundle
+[07:39:34]: ▸ [WebViewNativeUIEngine_WebViewNativeUIEngine] Touching WebViewNativeUIEngine_WebViewNativeUIEngine.bundle
+[07:39:34]: ▸ [CapacitorCommunityAdmob_AdMobPlugin] RegisterExecutionPolicyException CapacitorCommunityAdmob_AdMobPlugin.bundle
+[07:39:34]: ▸ [CapacitorCommunityAdmob_AdMobPlugin] Touching CapacitorCommunityAdmob_AdMobPlugin.bundle
+[07:39:37]: ▸ [NativeUIGlassCapture] Compiling NativeUIGlassCapture.mm
+[07:39:38]: ▸ [GoogleMobileAdsTarget] Compiling placeholder.swift
+[07:39:38]: ▸ [GoogleMobileAdsTarget] Copy arm64-apple-ios.swiftmodule -> GoogleMobileAdsTarget.swiftmodule
+[07:39:38]: ▸ [GoogleMobileAdsTarget] Copy arm64-apple-ios.swiftdoc -> GoogleMobileAdsTarget.swiftdoc
+[07:39:38]: ▸ [GoogleMobileAdsTarget] Copy arm64-apple-ios.abi.json -> GoogleMobileAdsTarget.abi.json
+[07:39:38]: ▸ [UserMessagingPlatformTarget] Compiling placeholder.m
+[07:39:38]: ▸ [UserMessagingPlatformTarget] Linking UserMessagingPlatformTarget.o
+[07:39:39]: ▸ [NativeUIGlassCapture] Linking NativeUIGlassCapture.o
+[07:39:39]: ▸ [UserMessagingPlatformTarget] RegisterExecutionPolicyException UserMessagingPlatformTarget.o
+[07:39:39]: ▸ [NativeUIGlassCapture] RegisterExecutionPolicyException NativeUIGlassCapture.o
+[07:39:39]: ▸ [GoogleMobileAdsTarget] Linking GoogleMobileAdsTarget.o
+[07:39:39]: ▸ [GoogleMobileAdsTarget] Extract App Intents Metadata
+[07:39:39]: ▸ [GoogleMobileAdsTarget] RegisterExecutionPolicyException GoogleMobileAdsTarget.o
+[07:39:56]: ▸ [SplashScreenPlugin] Copy arm64-apple-ios.swiftmodule -> SplashScreenPlugin.swiftmodule
+[07:39:56]: ▸ [SplashScreenPlugin] Copy arm64-apple-ios.swiftdoc -> SplashScreenPlugin.swiftdoc
+[07:39:56]: ▸ [SplashScreenPlugin] Copy arm64-apple-ios.abi.json -> SplashScreenPlugin.abi.json
+[07:39:56]: ▸ [SplashScreenPlugin] Linking SplashScreenPlugin.o
+[07:39:56]: ▸ [SplashScreenPlugin] Extract App Intents Metadata
+[07:39:56]: ▸ [SplashScreenPlugin] RegisterExecutionPolicyException SplashScreenPlugin.o
+[07:39:56]: ▸ [StatusBarPlugin] Copy arm64-apple-ios.swiftmodule -> StatusBarPlugin.swiftmodule
+[07:39:56]: ▸ [StatusBarPlugin] Copy arm64-apple-ios.swiftdoc -> StatusBarPlugin.swiftdoc
+[07:39:56]: ▸ [StatusBarPlugin] Copy arm64-apple-ios.abi.json -> StatusBarPlugin.abi.json
+[07:39:56]: ▸ [StatusBarPlugin] Linking StatusBarPlugin.o
+[07:39:56]: ▸ [StatusBarPlugin] Extract App Intents Metadata
+[07:39:56]: ▸ [StatusBarPlugin] RegisterExecutionPolicyException StatusBarPlugin.o
+[07:39:56]: ▸ [WebViewNativeUIEngine] Copy arm64-apple-ios.swiftmodule -> WebViewNativeUIEngine.swiftmodule
+[07:39:56]: ▸ [WebViewNativeUIEngine] Copy arm64-apple-ios.swiftdoc -> WebViewNativeUIEngine.swiftdoc
+[07:39:56]: ▸ [WebViewNativeUIEngine] Copy arm64-apple-ios.abi.json -> WebViewNativeUIEngine.abi.json
+[07:39:56]: ▸ [WebViewNativeUIEngine] Linking WebViewNativeUIEngine.o
+[07:39:57]: ▸ [WebViewNativeUIEngine] Extract App Intents Metadata
+[07:39:57]: ▸ [WebViewNativeUIEngine] RegisterExecutionPolicyException WebViewNativeUIEngine.o
+[07:40:04]: ▸ [AdMobPlugin] Copy arm64-apple-ios.swiftdoc -> AdMobPlugin.swiftdoc
+[07:40:04]: ▸ [AdMobPlugin] Copy arm64-apple-ios.swiftmodule -> AdMobPlugin.swiftmodule
+[07:40:04]: ▸ [AdMobPlugin] Copy arm64-apple-ios.abi.json -> AdMobPlugin.abi.json
+[07:40:04]: ▸ [AdMobPlugin] Linking AdMobPlugin.o
+[07:40:04]: ▸ [CapApp-SPM] Compiling CapApp-SPM.swift
+[07:40:05]: ▸ [AdMobPlugin] Extract App Intents Metadata
+[07:40:05]: ▸ [AdMobPlugin] RegisterExecutionPolicyException AdMobPlugin.o
+[07:40:05]: ▸ [CapApp-SPM] Copy arm64-apple-ios.swiftmodule -> CapApp_SPM.swiftmodule
+[07:40:05]: ▸ [CapApp-SPM] Copy arm64-apple-ios.swiftdoc -> CapApp_SPM.swiftdoc
+[07:40:05]: ▸ [CapApp-SPM] Copy arm64-apple-ios.abi.json -> CapApp_SPM.abi.json
+[07:40:05]: ▸ [CapApp-SPM] Linking CapApp-SPM.o
+[07:40:05]: ▸ [App] Generate Asset Symbols Assets.xcassets
+[07:40:20]: ▸ [CapApp-SPM] Extract App Intents Metadata
+[07:40:20]: ▸ [CapApp-SPM] RegisterExecutionPolicyException CapApp-SPM.o
+[07:40:20]: ▸ [App] Copying public
+[07:40:20]: ▸ [App] Copying config.xml
+[07:40:20]: ▸ [App] Copying capacitor.config.json
+[07:40:20]: ▸ [App] Copy WebViewNativeUIEngine_WebViewNativeUIEngine.bundle -> WebViewNativeUIEngine_WebViewNativeUIEngine.bundle
+[07:40:20]: ▸ [App] Copy UserMessagingPlatform.framework -> UserMessagingPlatform.framework
+[07:40:20]: ▸ note: Injecting stub binary into codeless framework (in target 'App' from project 'App')
+[07:40:20]: ▸ [App] Copy GoogleMobileAds.framework -> GoogleMobileAds.framework
+[07:40:20]: ▸ note: Injecting stub binary into codeless framework (in target 'App' from project 'App')
+[07:40:20]: ▸ [App] Copy Cordova.framework -> Cordova.framework
+[07:40:20]: ▸ [App] Copy Capacitor.framework -> Capacitor.framework
+[07:40:20]: ▸ [App] Copy CapacitorCommunityAdmob_AdMobPlugin.bundle -> CapacitorCommunityAdmob_AdMobPlugin.bundle
+[07:40:20]: ▸ [App] Compiling Main.storyboard
+[07:40:20]: ▸ [App] Compiling LaunchScreen.storyboard
+[07:40:20]: ▸ Signing UserMessagingPlatform.framework (in target 'App' from project 'App')
+[07:40:20]: ▸ Signing GoogleMobileAds.framework (in target 'App' from project 'App')
+[07:40:20]: ▸ Signing Cordova.framework (in target 'App' from project 'App')
+[07:40:20]: ▸ Signing Capacitor.framework (in target 'App' from project 'App')
+[07:40:20]: ▸ note: Emplaced /Users/runner/Library/Developer/Xcode/DerivedData/App-cecauhctatojrygvvhjfmdxwbswz/Build/Intermediates.noindex/ArchiveIntermediates/App/InstallationBuildProductsLocation/Applications/App.app/AppIcon76x76@2x~ipad.png (in target 'App' from project 'App')
+[07:40:20]: ▸ note: Emplaced /Users/runner/Library/Developer/Xcode/DerivedData/App-cecauhctatojrygvvhjfmdxwbswz/Build/Intermediates.noindex/ArchiveIntermediates/App/InstallationBuildProductsLocation/Applications/App.app/Assets.car (in target 'App' from project 'App')
+[07:40:20]: ▸ note: Emplaced /Users/runner/Library/Developer/Xcode/DerivedData/App-cecauhctatojrygvvhjfmdxwbswz/Build/Intermediates.noindex/ArchiveIntermediates/App/InstallationBuildProductsLocation/Applications/App.app/AppIcon60x60@2x.png (in target 'App' from project 'App')
+[07:40:20]: ▸ [App] Processing Info.plist
+[07:40:20]: ▸ [App] Copy arm64-apple-ios.swiftdoc -> App.swiftdoc
+[07:40:20]: ▸ [App] Copy arm64-apple-ios.swiftmodule -> App.swiftmodule
+[07:40:20]: ▸ [App] Copy arm64-apple-ios.abi.json -> App.abi.json
+[07:40:20]: ▸ [App] Linking App
+[07:40:21]: ▸ [App] Extract App Intents Metadata
+[07:40:21]: ▸ [App] Generating App.app.dSYM
+[07:40:21]: ▸ Signing App.app (in target 'App' from project 'App')
+[07:40:21]: ▸ [App] RegisterExecutionPolicyException App.app
+[07:40:21]: ▸ [App] Validate App.app
+[07:40:21]: ▸ [App] Touching App.app
+[07:40:21]: ▸ Archive Succeeded
+[07:40:22]: Generated plist file with the following values:
+[07:40:22]: ▸ -----------------------------------------
+[07:40:22]: ▸ {
+[07:40:22]: ▸   "provisioningProfiles": {
+[07:40:22]: ▸     "com.gulergamestudios.geceavcilari": "com.gulergamestudios.geceavcilari AppStore 1795419534"
+[07:40:22]: ▸   },
+[07:40:22]: ▸   "method": "app-store",
+[07:40:22]: ▸   "signingStyle": "manual"
+[07:40:22]: ▸ }
+[07:40:22]: ▸ -----------------------------------------
+[07:40:22]: $ /usr/bin/xcrun /opt/homebrew/lib/ruby/gems/3.4.0/gems/fastlane-2.242.0/gym/lib/assets/wrap_xcodebuild/xcbuild-safe.sh -exportArchive -exportOptionsPlist /var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/gym_config20261123-2039-pgz54c.plist -archivePath /Users/runner/Library/Developer/Xcode/Archives/2026-11-23/GeceAvcilari\ 2026-11-23\ 07.39.25.xcarchive -exportPath /var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/gym_output20261123-2039-ov8w17 CURRENT_PROJECT_VERSION=4 DEVELOPMENT_TEAM=*** 
+[07:40:25]: Compressing 3 dSYM(s)
+[07:40:25]: $ cd /Users/runner/Library/Developer/Xcode/Archives/2026-11-23/GeceAvcilari\ 2026-11-23\ 07.39.25.xcarchive/dSYMs && zip -r /Users/runner/work/gece-avcilari/gece-avcilari/build/GeceAvcilari.app.dSYM.zip *.dSYM
+[07:40:25]: ▸   adding: App.app.dSYM/ (stored 0%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/ (stored 0%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/Resources/ (stored 0%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/Resources/Relocations/ (stored 0%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/Resources/Relocations/aarch64/ (stored 0%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/Resources/Relocations/aarch64/App.yml (deflated 87%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/Resources/DWARF/ (stored 0%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/Resources/DWARF/App (deflated 67%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/Resources/Swift/ (stored 0%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/Resources/Swift/aarch64/ (stored 0%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/Resources/Swift/aarch64/Capacitor.swiftinterface (deflated 85%)
+[07:40:25]: ▸   adding: App.app.dSYM/Contents/Info.plist (deflated 52%)
+[07:40:25]: ▸   adding: Capacitor.framework.dSYM/ (stored 0%)
+[07:40:25]: ▸   adding: Capacitor.framework.dSYM/Contents/ (stored 0%)
+[07:40:25]: ▸   adding: Capacitor.framework.dSYM/Contents/Resources/ (stored 0%)
+[07:40:25]: ▸   adding: Capacitor.framework.dSYM/Contents/Resources/Relocations/ (stored 0%)
+[07:40:25]: ▸   adding: Capacitor.framework.dSYM/Contents/Resources/Relocations/aarch64/ (stored 0%)
+[07:40:25]: ▸   adding: Capacitor.framework.dSYM/Contents/Resources/Relocations/aarch64/Capacitor.yml (deflated 86%)
+[07:40:25]: ▸   adding: Capacitor.framework.dSYM/Contents/Resources/DWARF/ (stored 0%)
+[07:40:26]: ▸   adding: Capacitor.framework.dSYM/Contents/Resources/DWARF/Capacitor (deflated 63%)
+[07:40:26]: ▸   adding: Capacitor.framework.dSYM/Contents/Info.plist (deflated 52%)
+[07:40:26]: ▸   adding: Cordova.framework.dSYM/ (stored 0%)
+[07:40:26]: ▸   adding: Cordova.framework.dSYM/Contents/ (stored 0%)
+[07:40:26]: ▸   adding: Cordova.framework.dSYM/Contents/Resources/ (stored 0%)
+[07:40:26]: ▸   adding: Cordova.framework.dSYM/Contents/Resources/Relocations/ (stored 0%)
+[07:40:26]: ▸   adding: Cordova.framework.dSYM/Contents/Resources/Relocations/aarch64/ (stored 0%)
+[07:40:26]: ▸   adding: Cordova.framework.dSYM/Contents/Resources/Relocations/aarch64/Cordova.yml (deflated 85%)
+[07:40:26]: ▸   adding: Cordova.framework.dSYM/Contents/Resources/DWARF/ (stored 0%)
+[07:40:26]: ▸   adding: Cordova.framework.dSYM/Contents/Resources/DWARF/Cordova (deflated 60%)
+[07:40:26]: ▸   adding: Cordova.framework.dSYM/Contents/Info.plist (deflated 52%)
+
+[07:40:26]: Successfully exported and compressed dSYM file
+[07:40:26]: Successfully exported and signed the ipa file:
+[07:40:26]: /Users/runner/work/gece-avcilari/gece-avcilari/build/GeceAvcilari.ipa
+[07:40:26]: ----------------------------------
+[07:40:26]: --- Step: upload_to_testflight ---
+[07:40:26]: ----------------------------------
+[07:40:26]: Creating authorization token for App Store Connect API
+[07:40:26]: Ready to upload new build to TestFlight (App: 6838212073)...
+[07:40:26]: Going to upload updated app to App Store Connect
+[07:40:26]: This might take a few minutes. Please don't interrupt the script.
+[07:41:41]: --------------------------------------------------------------------
+[07:41:41]: Successfully uploaded package to App Store Connect. It might take a few minutes until it's visible online.
+[07:41:41]: --------------------------------------------------------------------
+[07:41:41]: Successfully uploaded the new binary to App Store Connect
+[07:41:41]: `skip_waiting_for_build_processing` used and no `changelog` supplied - skipping waiting for build processing
+[07:41:41]: Geçici dağıtım sertifikası iptal edildi: 7P73AHVX89
+
++------------------------------------------------------------------------------------+
+|                                  fastlane summary                                  |
++------+---------------------------------------------------------------+-------------+
+| Step | Action                                                        | Time (in s) |
++------+---------------------------------------------------------------+-------------+
+| 1    | default_platform                                              | 0           |
+| 2    | setup_ci                                                      | 0           |
+| 3    | app_store_connect_api_key                                     | 0           |
+| 4    | curl -fsSL -o '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn | 0           |
+| 5    | security import '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000 | 0           |
+| 6    | security import '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000 | 0           |
+| 7    | security import '/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000 | 0           |
+| 8    | security set-key-partition-list -S apple-tool:,apple:,codesig | 0           |
+| 9    | security find-identity -v -p codesigning '/Users/runner/Libra | 0           |
+| 10   | get_provisioning_profile                                      | 2           |
+| 11   | update_code_signing_settings                                  | 0           |
+| 12   | build_app                                                     | 91          |
+| 13   | upload_to_testflight                                          | 75          |
++------+---------------------------------------------------------------+-------------+
+
+[07:41:42]: fastlane.tools finished successfully 🎉
