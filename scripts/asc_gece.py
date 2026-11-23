@@ -17,7 +17,7 @@ SITE = 'https://furkan7224.github.io/gece-avcilari/'
 PRIVACY = SITE + 'gizlilik.html'
 
 INFO = {  # appInfoLocalizations
-    'tr': {'name': 'Gece Avcıları', 'subtitle': 'Doğaüstü avcılık ve gizem', 'privacyPolicyUrl': PRIVACY},
+    'tr': {'name': 'Gece Avcıları: Doğaüstü Av', 'subtitle': 'Doğaüstü avcılık ve gizem', 'privacyPolicyUrl': PRIVACY},
     'en-US': {'name': 'Night Hunters: Gece Avcıları', 'subtitle': 'Supernatural mystery hunts', 'privacyPolicyUrl': PRIVACY + '#en'},
 }
 
