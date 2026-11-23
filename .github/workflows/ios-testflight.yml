@@ -70,7 +70,9 @@ jobs:
 
       - name: Capacitor iOS senkronizasyonu
         id: s04
-        run: npx cap sync ios
+        run: |
+          npx cap sync ios
+          python3 scripts/add-mediation.py
 
       - name: App Store Connect API anahtarını yaz
         id: s05
