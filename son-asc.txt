@@ -21,7 +21,7 @@ Collecting pycparser (from cffi>=2.0.0->cryptography)
   Downloading pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)
 Downloading pyjwt-2.15.1-py3-none-any.whl (33 kB)
 Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl (4.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 1.9 MB/s  0:00:02
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 98.1 MB/s  0:00:00
 Downloading requests-2.34.2-py3-none-any.whl (73 kB)
 Downloading charset_normalizer-3.5.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (257 kB)
 Downloading idna-3.20-py3-none-any.whl (69 kB)
@@ -36,34 +36,22 @@ Successfully installed certifi-2026.11.20 cffi-2.1.1 charset_normalizer-3.5.3 cr
 • Kategori: Oyunlar › Rol Yapma, Macera
 • Uygulama bilgisi: tr Gece Avcıları: Doğaüstü Av
 • Uygulama bilgisi: en-US Night Hunters: Gece Avcıları
-HATA PATCH /v1/ageRatingDeclarations/c83506e2-df3d-49d5-9e62-9b7ace06cc33 409 {
+  yaş alanı eklendi: ['socialMedia'] ["You must provide a value for the attribute 'socialMedia' with this request"]
+• Yaş derecelendirmesi kaydedildi
+• İçerik hakları: üçüncü taraf içerik yok
+HATA GET /v1/appPriceSchedules/6838212073/manualPrices?include=appPricePoint 404 {
   "errors" : [ {
-    "id" : "1faaf3bf-3eab-40ac-a881-e6b57d35e05f",
-    "status" : "409",
-    "code" : "ENTITY_ERROR.ATTRIBUTE.REQUIRED",
-    "title" : "The provided entity is missing a required attribute",
-    "detail" : "You must provide a value for the attribute 'socialMedia' with this request",
-    "source" : {
-      "pointer" : "/data/attributes/socialMedia"
-    }
+    "id" : "c1b89f10-38ed-4525-8bea-bb3ced4ea243",
+    "status" : "404",
+    "code" : "NOT_FOUND",
+    "title" : "The specified resource does not exist",
+    "detail" : "There is no resource of type 'null' with id '6838212073'"
   } ]
 }
-• Yaş derecelendirmesi KAYDEDİLEMEDİ (App Store Connect’ten elle doldur) | alanlar: ['advertising', 'ageAssurance', 'ageRatingOverride', 'ageRatingOverrideV2', 'alcoholTobaccoOrDrugUseOrReferences', 'contests', 'datingAndRelationships', 'developerAgeRatingInfoUrl', 'gambling', 'gamblingSimulated', 'gracRatingClassificationNumber', 'gunsOrOtherWeapons', 'healthOrWellnessTopics', 'horrorOrFearThemes', 'kidsAgeBand', 'koreaAgeRatingOverride', 'lootBox', 'matureOrSuggestiveThemes', 'medicalOrTreatmentInformation', 'messagingAndChat', 'parentalControls', 'profanityOrCrudeHumor', 'sexualContentGraphicAndNudity', 'sexualContentOrNudity', 'sharedLocation', 'socialMedia', 'socialMediaAgeRestricted', 'unrestrictedWebAccess', 'userGeneratedContent', 'violenceCartoonOrFantasy', 'violenceRealistic', 'violenceRealisticProlongedGraphicOrSadistic']
-• İçerik hakları: üçüncü taraf içerik yok
-• Fiyat planı zaten var
+• Fiyat planı zaten var: []
 • Mağaza metni: tr
-• Ekran görüntüsü yüklendi: tr 01.jpg
-• Ekran görüntüsü yüklendi: tr 02.jpg
-• Ekran görüntüsü yüklendi: tr 03.jpg
-• Ekran görüntüsü yüklendi: tr 04.jpg
-• Ekran görüntüsü yüklendi: tr 05.jpg
-• Ekran görüntüsü yüklendi: tr 06.jpg
+• Ekran görüntüleri zaten yüklü: tr
 • Mağaza metni: en-US
-• Ekran görüntüsü yüklendi: en-US 01.jpg
-• Ekran görüntüsü yüklendi: en-US 02.jpg
-• Ekran görüntüsü yüklendi: en-US 03.jpg
-• Ekran görüntüsü yüklendi: en-US 04.jpg
-• Ekran görüntüsü yüklendi: en-US 05.jpg
-• Ekran görüntüsü yüklendi: en-US 06.jpg
+• Ekran görüntüleri zaten yüklü: en-US
 • İnceleme bilgileri: iletişim Büyük Yemin’den kopyalandı
 • KURULUM TAMAM. App Store Connect’te kalan: Uygulama Gizliliği formu ve ülke erişilebilirliği (bir kez).
