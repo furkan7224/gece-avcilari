@@ -1,0 +1,76 @@
+durum: failure
+adımlar: {"s01": "success", "s02": "failure"}
+-----
+Collecting pyjwt
+  Downloading pyjwt-2.15.1-py3-none-any.whl.metadata (3.5 kB)
+Collecting cryptography
+  Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl.metadata (4.4 kB)
+Collecting requests
+  Downloading requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting cffi>=2.0.0 (from cryptography)
+  Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.5 kB)
+Collecting charset_normalizer<4,>=2 (from requests)
+  Downloading charset_normalizer-3.5.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (43 kB)
+Collecting idna<4,>=2.5 (from requests)
+  Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+Collecting urllib3<3,>=1.26 (from requests)
+  Downloading urllib3-2.8.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting certifi>=2023.5.7 (from requests)
+  Downloading certifi-2026.11.20-py3-none-any.whl.metadata (2.5 kB)
+Collecting pycparser (from cffi>=2.0.0->cryptography)
+  Downloading pycparser-3.12-py3-none-any.whl.metadata (9.7 kB)
+Downloading pyjwt-2.15.1-py3-none-any.whl (33 kB)
+Downloading cryptography-50.0.2-cp311-abi3-manylinux_2_34_x86_64.whl (4.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 91.2 MB/s  0:00:00
+Downloading requests-2.34.2-py3-none-any.whl (73 kB)
+Downloading charset_normalizer-3.5.3-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (257 kB)
+Downloading idna-3.20-py3-none-any.whl (69 kB)
+Downloading urllib3-2.8.0-py3-none-any.whl (135 kB)
+Downloading certifi-2026.11.20-py3-none-any.whl (127 kB)
+Downloading cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (221 kB)
+Downloading pycparser-3.12-py3-none-any.whl (62 kB)
+Installing collected packages: urllib3, pyjwt, pycparser, idna, charset_normalizer, certifi, requests, cffi, cryptography
+
+Successfully installed certifi-2026.11.20 cffi-2.1.1 charset_normalizer-3.5.3 cryptography-50.0.2 idna-3.20 pycparser-3.12 pyjwt-2.15.1 requests-2.34.2 urllib3-2.8.0
+• Uygulama kimliği: 6838212073
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Geçerli yapı yok: [('4', 'VALID')]
+• Yapı 1.0.0 ( 9 )
+• Mağaza metni: tr
+• Ekran görüntüleri zaten yüklü: tr
+• Mağaza metni: en-US
+• Ekran görüntüleri zaten yüklü: en-US
+• İnceleme bilgileri: iletişim Büyük Yemin’den kopyalandı
+• Yapı sürüme bağlandı
+• Açık inceleme kaydı: 282d5348-fc40-47e8-bfe5-09970974ddce UNRESOLVED_ISSUES
+• Yeniden gönderilemedi, kayıt kapatılıp yenisi açılıyor: This resource cannot be reviewed, please check associated errors to see why.
+HATA PATCH /v1/reviewSubmissions/b32eda6b-40d0-4e8d-bf0a-16a6c5c098a3 409 {
+  "errors" : [ {
+    "id" : "43dff748-ab9c-4bfc-a43e-8a00fd489d3b",
+    "status" : "409",
+    "code" : "ENTITY_ERROR.RELATIONSHIP.REQUIRED",
+    "title" : "Relationship is required",
+    "detail" : "App 6838212073 must have an approved appStoreVersions for at least one of platforms [IOS], or an appStoreVersions must be included in this review submission.",
+    "source" : {
+      "pointer" : "/data/relationships/appStoreVersionForReview"
+    }
+  } ]
+}
