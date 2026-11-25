@@ -307,6 +307,10 @@ def setup():
 
 def status():
     a = call('GET', f'/v1/apps/{APP_ID}')['data']['attributes']
+    try:
+        ar = call('GET', f"/v1/appInfos/{app_info()['id']}/ageRatingDeclaration")['data']['attributes']
+        log('Yaş: kumar(sim)=', ar.get('gamblingSimulated'), 'kumar=', ar.get('gambling'), 'reklam=', ar.get('advertising'), 'korku=', ar.get('horrorOrFearThemes'))
+    except SystemExit: pass
     log('Uygulama', a.get('name'), a.get('bundleId'))
     for v in call('GET', f'/v1/apps/{APP_ID}/appStoreVersions?filter[platform]=IOS&limit=5')['data']:
         log('Sürüm', v['attributes']['versionString'], v['attributes']['appStoreState'], v['attributes'].get('releaseType'))
@@ -314,6 +318,8 @@ def status():
         log('Yapı', b['attributes']['version'], b['attributes']['processingState'])
     for s in call('GET', f'/v1/reviewSubmissions?filter[app]={APP_ID}&limit=5')['data']:
         log('İnceleme kaydı', s['id'], s['attributes'].get('state'), s['attributes'].get('submittedDate'))
+        for it in call('GET', f"/v1/reviewSubmissions/{s['id']}/items", soft=True)['data'] if True else []:
+            log('   öğe', it['id'], it['attributes'].get('state'))
 
 
 def submit(wait=False):

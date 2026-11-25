@@ -2905,7 +2905,7 @@ const PKEY="geceavcilari_prem";
 const PREM={get(){try{return JSON.parse(localStorage.getItem(PKEY)||"{}")}catch(e){return {}}},has(id){const p=this.get();return !!(p.all||p[id])},set(id){const p=this.get();p[id]=true;try{localStorage.setItem(PKEY,JSON.stringify(p))}catch(e){}}};
 /* Mağaza entegrasyonu için: satın alma tamamlanınca window.GA_unlockStory("olum") ya da ("all") çağrılır. */
 window.GA_unlockStory=id=>{PREM.set(id);try{render()}catch(e){}};
-const PROMO={"GECE-PREMIUM":"all"};
+const PROMO={};
 /* hikâye boss'ları: mevcut yaratıklardan türetilir */
 function regBoss(id,base,o){if(CRM[id])return;CRM[id]=Object.assign({},CRM[base],{id},o);ARCH[id]=o.arch||ARCH[base];OBJ[id]=o.obj||OBJ[base];if(o.pal)PAL[id]=o.pal}
 function initBosses(){
@@ -5172,7 +5172,7 @@ const PKEY="geceavcilari_prem";
 const PREM={get(){try{return JSON.parse(localStorage.getItem(PKEY)||"{}")}catch(e){return {}}},has(id){const p=this.get();return !!(p.all||p[id])},set(id){const p=this.get();p[id]=true;try{localStorage.setItem(PKEY,JSON.stringify(p))}catch(e){}}};
 /* Mağaza entegrasyonu için: satın alma tamamlanınca window.GA_unlockStory("olum") ya da ("all") çağrılır. */
 window.GA_unlockStory=id=>{PREM.set(id);try{render()}catch(e){}};
-const PROMO={"GECE-PREMIUM":"all"};
+const PROMO={};
 /* hikâye boss'ları: mevcut yaratıklardan türetilir */
 function regBoss(id,base,o){if(CRM[id])return;CRM[id]=Object.assign({},CRM[base],{id},o);ARCH[id]=o.arch||ARCH[base];OBJ[id]=o.obj||OBJ[base];if(o.pal)PAL[id]=o.pal}
 function initBosses(){
