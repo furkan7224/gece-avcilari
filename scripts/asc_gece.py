@@ -284,8 +284,10 @@ def review_detail(vid):
 
 def find_build(wait=False):
     for _ in range(170 if wait else 1):
-        r = call('GET', f'/v1/builds?filter[app]={APP_ID}&filter[preReleaseVersion.version]={VERSION}&sort=-uploadedDate&limit=5')
-        bs = [b for b in r['data'] if b['attributes']['processingState'] == 'VALID']
+        r = call('GET', f'/v1/builds?filter[app]={APP_ID}&filter[preReleaseVersion.version]={VERSION}&sort=-uploadedDate&limit=20')
+        mn = int(os.environ.get('MIN_BUILD', '0') or 0)
+        bs = sorted([b for b in r['data'] if b['attributes']['processingState'] == 'VALID' and int(b['attributes']['version']) > mn],
+                    key=lambda b: int(b['attributes']['version']), reverse=True)
         if bs:
             b = bs[0]
             if b['attributes'].get('usesNonExemptEncryption') is None:
@@ -328,18 +330,30 @@ def submit(wait=False):
     setup_version(v)
     call('PATCH', f"/v1/appStoreVersions/{v['id']}/relationships/build", {'data': {'type': 'builds', 'id': b['id']}})
     log('Yapı sürüme bağlandı')
-    subs = call('GET', f'/v1/reviewSubmissions?filter[app]={APP_ID}&filter[platform]=IOS&filter[state]=READY_FOR_REVIEW&limit=5')['data']
-    if subs:
-        sid = subs[0]['id']
-    else:
-        sid = call('POST', '/v1/reviewSubmissions', {'data': {'type': 'reviewSubmissions', 'attributes': {'platform': 'IOS'},
+    def new_sub():
+        return call('POST', '/v1/reviewSubmissions', {'data': {'type': 'reviewSubmissions', 'attributes': {'platform': 'IOS'},
                     'relationships': {'app': {'data': {'type': 'apps', 'id': APP_ID}}}}})['data']['id']
-    items = call('GET', f'/v1/reviewSubmissions/{sid}/items')['data']
-    if not any(i.get('relationships', {}).get('appStoreVersion', {}).get('data') for i in items):
-        call('POST', '/v1/reviewSubmissionItems', {'data': {'type': 'reviewSubmissionItems', 'relationships': {
-            'reviewSubmission': {'data': {'type': 'reviewSubmissions', 'id': sid}},
-            'appStoreVersion': {'data': {'type': 'appStoreVersions', 'id': v['id']}}}}})
-    call('PATCH', f'/v1/reviewSubmissions/{sid}', {'data': {'type': 'reviewSubmissions', 'id': sid, 'attributes': {'submitted': True}}})
+    def ensure_item(sid):
+        items = call('GET', f'/v1/reviewSubmissions/{sid}/items')['data']
+        if not any(i['attributes'].get('state') in ('READY_FOR_REVIEW', 'ACCEPTED') for i in items):
+            call('POST', '/v1/reviewSubmissionItems', {'data': {'type': 'reviewSubmissionItems', 'relationships': {
+                'reviewSubmission': {'data': {'type': 'reviewSubmissions', 'id': sid}},
+                'appStoreVersion': {'data': {'type': 'appStoreVersions', 'id': v['id']}}}}}, ok=(200, 201, 409), soft=True)
+    subs = call('GET', f'/v1/reviewSubmissions?filter[app]={APP_ID}&filter[platform]=IOS&limit=10')['data']
+    open_ = [x for x in subs if x['attributes'].get('state') in ('UNRESOLVED_ISSUES', 'READY_FOR_REVIEW')]
+    done = False
+    for x in open_:
+        sid = x['id']; log('Açık inceleme kaydı:', sid, x['attributes'].get('state'))
+        if x['attributes'].get('state') == 'READY_FOR_REVIEW': ensure_item(sid)
+        r = call('PATCH', f'/v1/reviewSubmissions/{sid}', {'data': {'type': 'reviewSubmissions', 'id': sid, 'attributes': {'submitted': True}}}, ok=(200, 409), soft=True)
+        if r and not r.get('errors'):
+            done = True; break
+        log('Yeniden gönderilemedi, kayıt kapatılıp yenisi açılıyor:', (r or {}).get('errors', [{}])[0].get('detail'))
+        call('PATCH', f'/v1/reviewSubmissions/{sid}', {'data': {'type': 'reviewSubmissions', 'id': sid, 'attributes': {'canceled': True}}}, soft=True)
+        time.sleep(5)
+    if not done:
+        sid = new_sub(); ensure_item(sid)
+        call('PATCH', f'/v1/reviewSubmissions/{sid}', {'data': {'type': 'reviewSubmissions', 'id': sid, 'attributes': {'submitted': True}}})
     log('GÖNDERİLDİ: sürüm', VERSION, 'Apple incelemesine gitti')
     status()
 
