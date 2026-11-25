@@ -89,13 +89,13 @@ REVIEW_NOTES = ("Gece Avcıları / Night Hunters is a single-player strategy gam
                 "Ads: Google AdMob. An interstitial ad may appear after a case ends (never during the first two cases). Rewarded ads are optional: "
                 "\"Watch an ad\" to heal heavy wounds, or to get a last chance when both hunters fall during a hunt.\n"
                 "App Tracking Transparency is requested on the first tap, before any ad is loaded.\n"
-                "There are no in-app purchases in this version.")
+                "There are no in-app purchases in this version. The game contains no simulated gambling: the pool hall is a fixed-pay night shift with no wagering and no chance of losing money.")
 
 AGE = {  # yalnızca API'nin döndürdüğü alanlar gönderilir
     'violenceCartoonOrFantasy': 'FREQUENT_OR_INTENSE',
     'horrorOrFearThemes': 'FREQUENT_OR_INTENSE',
     'alcoholTobaccoOrDrugUseOrReferences': 'INFREQUENT_OR_MILD',
-    'gamblingSimulated': 'INFREQUENT_OR_MILD',
+    'gamblingSimulated': 'NONE',
     'gunsOrOtherWeapons': 'FREQUENT_OR_INTENSE',
     'matureOrSuggestiveThemes': 'NONE', 'medicalOrTreatmentInformation': 'NONE', 'profanityOrCrudeHumor': 'NONE',
     'sexualContentGraphicAndNudity': 'NONE', 'sexualContentOrNudity': 'NONE', 'violenceRealistic': 'NONE',
